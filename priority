@@ -1,0 +1,71 @@
+#include<stdio.h>
+  2 
+  3 int main(){
+  4     int n,i,j,pos;
+  5     float total_wt=0,total_tat=0;
+  6     printf("enter number of processors:");
+  7     scanf("%d",&n);
+  8     int pr[n],bt[n],wt[n],tat[n],p[i];
+  9     for(i =0;i<n;i++){
+ 10         printf("enter burst times and priorities:");
+ 11         scanf("%d %d",&bt[i],&pr[i]);
+ 12         p[i]=i+1;
+ 13         }
+ 14 
+ 15     void swap(int *x,int *y){
+ 16            int temp = *x;
+ 17            *x = *y;
+ 18            *y = temp;
+ 19           }
+ 20 
+ 21     for(i=0;i<n;i++){
+ 22         pos = i;
+ 23         for(j=i+1;j<n;j++){
+ 24             if(pr[j]<pr[pos]){
+ 25                 pos = j;
+ 26                 }
+ 27             }
+ 28                 swap(&pr[i],&pr[pos]);
+ 29                 swap(&bt[i],&bt[pos]);
+ 30                 swap(&p[i],&p[pos]);
+ 31                 }
+ 32     for(i=0;i<n;i++){
+ 33         if(pr[i] == pr[i+1] && p[i]>p[i+1]){
+ 34             swap(&p[i],&p[i+1]);
+ 35             swap(&bt[i],&bt[i+1]);
+ 36             }
+ 37         }
+        wt[0]=0;
+ 40     for(i=1;i<n;i++){
+ 41         wt[i]=wt[i-1]+bt[i-1];
+ 42         total_wt += wt[i];
+ 43         }
+ 44     printf("\nprocess\tpriority\twatingtime\tturnaroundtime\n");
+ 45     for(i=0;i<n;i++){
+ 46         tat[i]=wt[i]+bt[i];
+ 47         total_tat += tat[i];
+ 48         printf("%d\t\t%d\t\t%d\t\t%d\n",p[i],pr[i],wt[i],tat[i]);
+ 49         }
+ 50 
+ 51     printf("average wating time is:%f\n",total_wt/n);
+ 52     printf("average turnaround time is:%f",total_tat/n);
+ 53     }
+        
+        
+        
+        output:
+        enter number of processors:5
+enter burst times and priorities:10 3
+enter burst times and priorities:1 1
+enter burst times and priorities:2 3
+enter burst times and priorities:1 4
+enter burst times and priorities:5 2
+
+process	priority	watingtime	turnaroundtime
+2		1		0		1
+5		2		1		6
+1		3		6		16
+3		3		16		18
+4		4		18		19
+average wating time is:8.200000
+average turnaround time is:12.000000
