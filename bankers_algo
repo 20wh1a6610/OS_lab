@@ -1,0 +1,103 @@
+  #include<stdio.h>
+  2 int main(){
+  3     int n,r,i,j;
+  4     printf("enter number of processors:");
+  5     scanf("%d",&n);
+  6     printf("enter number of resources");
+  7     scanf("%d",&r);
+  8     int max[n][r],alloc[n][r],avail[r],need[n][r],status[n];
+  9     printf("enter maximum resources needed for each processor");
+ 10     for( i = 0;i<n;i++){
+ 11         for( j =0; j<r; j++){
+ 12             scanf("%d",&max[i][j]);
+ 13         }
+ 14     }
+ 15     printf("enter allocated resources");
+ 16     for(i = 0;i<n;i++){
+ 17         for(j = 0;j<r;j++){
+ 18         scanf("%d",&alloc[i][j]);
+ 19         }
+ 20     }
+ 21     printf("enter available resources");
+ 22     for(i =0;i<r;i++){
+ 23         scanf("%d",&avail[i]);
+ 24     }
+ 25     for(i =0;i<n;i++){
+ 26         for(j=0;j<r;j++){
+ 27             need[i][j] = max[i][j]-alloc[i][j];
+ 28             //printf("%d\t",need[i][j]);
+ 29         }
+ 30         printf("\n");
+ 31     }
+ 32     for(i = 0;i<n;i++){
+ 33         status[i]=0;
+ 34     }
+        int flag = 1;
+ 36     while(flag){
+ 37         flag = 0;
+ 38         for(i = 0;i<n;i++){
+ 39             int c = 0;
+ 40             for(j = 0;j<r;j++){
+ 41                 if(status[i]==0&&avail[j]>=need[i][j]){
+ 42                     c++;
+ 43                     if(c==r){
+ 44                         for(int k = 0;k<r;k++){
+ 45                             avail[k]=avail[k]+alloc[i][k];
+ 46                             status[i]=1;}
+ 47                             printf("p%d\t",i+1);
+ 48                             flag =1;
+ 49 
+ 50                     }
+ 51                 }
+ 52             }
+ 53     }   }
+ 54     int c1 = 0;
+ 55     for(i = 0;i<n;i++){
+ 56     if (status[i]==1){
+ 57         c1++;
+ 58     }
+ 59     }
+ 60         if(c1++==n){
+ 61             printf("\nprocess is in safe state");}
+ 62         else{
+ 63             printf("\nprocess is not in safe state");
+ 64         }
+ 65  }
+ 69 
+ 
+ output:
+ 
+ enter number of processors:5
+enter number of resources3
+enter maximum resources needed for each processor7 5 3
+3 2 2
+9 0 2
+2 2 2
+4 3 3
+enter allocated resources0 1 0
+3 0 2
+3 0 2
+2 1 1
+0 0 2
+enter available resources3 3 2
+p2	p3	p4	p5	p1	
+process is in safe state
+
+
+
+output2:
+enter number of processors:5
+enter number of resources3
+enter maximum resources needed for each processor0 1 0
+4 0 2
+3 0 4
+3 1 1
+0 0 4
+enter allocated resources0 1 0
+2 0 0
+3 0 3
+2 1 1
+0 0 2
+enter available resources0 0 0
+p1	
+process is not in safe state
