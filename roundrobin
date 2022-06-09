@@ -1,0 +1,75 @@
+
+#include<stdio.h>
+  3 #include<stdbool.h>
+  4 int main(){
+  5     int n;
+  6     printf("Enter the number of processors\n");
+  7     scanf("%d", &n);
+  8     int wt[n], tt[n], avg_wt= 0, avg_tt = 0, bt[n];
+  9     printf("Enter the burst times of the processors:\n");
+ 10     int i;
+ 11     for(i = 0; i < n; i++){
+ 12         scanf("%d", &bt[i]);
+ 13         }
+ 14     int cpy_bt[n];
+ 15     for(i = 0;i < n; i++){
+ 16         cpy_bt[i] = bt[i];
+ 17         }
+ 18     int tq;
+ 19     printf("Enter the time quantum :");
+ 20     scanf("%d", &tq);
+ 21     int t = 0;
+ 22     while(1){
+            bool done = true;
+ 24         for(i = 0; i < n; i++){
+ 25             if(cpy_bt[i] > 0){
+ 26                 done = false;
+ 27                 if(cpy_bt[i] > tq){
+ 28                     t = t + tq;
+ 29                     cpy_bt[i] = cpy_bt[i] - tq;
+ 30                                         }
+ 31                 else{
+ 32                     t = t + cpy_bt[i];
+ 33                     wt[i] = t - bt[i];
+ 34                     cpy_bt[i] = 0;
+ 35 
+ 36                     }}
+ 37                     }
+ 38                 if(done == true)
+ 39                     break;
+ 40                     }
+ 41     for(i = 0; i< n; i++){
+ 42         tt[i] = wt[i]+bt[i];
+ 43         avg_tt += tt[i];
+ 44         avg_wt += wt[i];
+ 45         }
+ 46     printf("The average waiting time : %.2f\n", (float)avg_wt/n);
+ 47     printf("The average turnaround time : %.2f\n", (float)avg_tt/n);
+ 48     printf("Burst_time\tTurnaround\tWaiting_time\n");
+ 49     for(i = 0; i < n; i++){
+ 50         printf("%d\t\t%d\t\t%d\n",bt[i], tt[i], wt[i]);
+ 51         }
+ 52         return 0;
+ 53         }
+
+
+
+
+output:
+Enter the number of processors
+5
+Enter the burst times of the processors:
+5
+3
+1
+2
+3
+Enter the time quantum :2
+The average waiting time : 7.40
+The average turnaround time : 10.20
+Burst_time	Turnaround	Waiting_time
+5		14		9
+3		12		9
+1		5		4
+2		7		5
+3		13		10
