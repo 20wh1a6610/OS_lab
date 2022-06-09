@@ -1,0 +1,44 @@
+
+
+  #include<stdio.h>
+   int main(){
+       int n,m,i,j,k;
+       float w,t;
+       printf("enter number of processes:");
+       scanf("%d",&n);
+       int bt[n],wt[n],tr[n];
+       printf("enter burst time:\n");
+       for(i = 0;i<n;i++){
+          scanf("%d",&bt[i]);
+          }
+      wt[0] = 0;
+      for(j=0;j<n-1;j++){
+          wt[j+1] = wt[j]+bt[j];
+          w = w+wt[j+1];
+          }
+      for(k=0;k<n;k++){
+          tr[k] = wt[k]+bt[k];
+          t = t+tr[k];
+          }
+      printf("processes   Burst time  Waiting time    Turn around time\n");
+      for(m=0;m<n;m++){
+          printf("%d\t\t%d\t\t%d\t\t%d\n",m+1,bt[m],wt[m],tr[m]);
+          }
+  
+      printf("Average Waiting Time = %f\n",w/n);
+      printf("Average Turn around Time = %f\n",t/n);
+     }
+        
+        
+ Output:
+enter number of processes:3   
+enter burst time:
+10
+5
+8
+processes   Burst time  Waiting time    Turn around time
+1		10		0		10
+2		5		10		15
+3		8		15		23
+Average Waiting Time = 8.333333
+Average Turn around Time = 16.000000
